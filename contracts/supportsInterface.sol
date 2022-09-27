@@ -17,13 +17,14 @@ interface IERC165 {
 interface ExampleInterface {
     function hello() external;
     function world() external;
+    function supportsInterface(bytes4 interfaceId) external pure returns (bool);
 }
 
 //There may be a generic implementation of this function for all interfaces. Ideas? ;)
 //This function will return an interface ID. I.e 0x80ac58cd == IERC721
 abstract contract InterfaceIdGenerator {
   function calcInterfaceId() external pure returns (bytes4) {
-    return ExampleInterface.hello.selector ^ ExampleInterface.world.selector;
+    return ExampleInterface.hello.selector ^ ExampleInterface.world.selector ^ ExampleInterface.supportsInterface.selector;
   }
 }
 
@@ -36,15 +37,29 @@ abstract contract SupportsERC {
 
     //@return: true if a contract supports an interface
     function supportsERC(address addr, bytes4 interfaceId) external pure returns (bool) {
-        return IERC165(addr).supportsInterface(interfaceId);
+        return ExampleInterface(addr).supportsInterface(interfaceId);
     }
 }
 
 //Our base implementation contract for purpose of this example
-contract MyContract is SupportsERC, InterfaceIdGenerator {
+contract MyContract is SupportsERC, InterfaceIdGenerator, ExampleInterface {
 
   //Here is the easy generic way to get an interface type using the solidity builtin.
+  //@return: same result as calcInterfaceId()
   function getExampleInterfaceType() external pure returns (bytes4) {
     return type(ExampleInterface).interfaceId;
+  }
+
+  //Implementation of our interface
+  function hello() external pure override{
+    return;
+  }
+
+  function world() external pure override {
+    return;
+  }
+
+  function supportsInterface(bytes4 interfaceId) external override pure returns (bool) {
+    return interfaceId == type(ExampleInterface).interfaceId;
   }
 }
