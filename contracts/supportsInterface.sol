@@ -36,8 +36,8 @@ abstract contract SupportsERC {
   	// IERC1820Registry can be used to retrieve/store contract interfaces
 
     //@return: true if a contract supports an interface
-    function supportsERC(address nftAddress, bytes4 interfaceId) external pure returns (bool) {
-        return IERC165(nftAddress).supportsInterface(interfaceId);
+    function supportsERC(address addr, bytes4 interfaceId) external pure returns (bool) {
+        return IERC165(addr).supportsInterface(interfaceId);
     }
 }
 
