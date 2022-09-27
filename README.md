@@ -6,7 +6,7 @@ A reasonably generic example of how to check a tokens inteface using solidity us
 
 ## DEMO
 
-![carbon (14)](https://user-images.githubusercontent.com/7098556/192479101-87120271-7ae4-4781-8fef-4e96d8ba707e.png)
+![carbon (15)](https://user-images.githubusercontent.com/7098556/192481202-3ea7f8bb-6c6b-4798-bf91-42b04ce94604.png)
 
 ## GET STARTED
 
