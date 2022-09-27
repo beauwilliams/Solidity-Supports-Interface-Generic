@@ -33,6 +33,7 @@ abstract contract SupportsERC {
     // Intsead of pure ones which uphold a side effect free invariant.
     // bytes4 private constant INTERFACE_ID_ERC721 = 0x80ac58cd;
     // bytes4 private constant INTERFACE_ID_ERC1155 = 0xd9b67a26;
+  	// IERC1820Registry can be used to retrieve/store contract interfaces
 
     //@return: true if a contract supports an interface
     function supportsERC(address nftAddress, bytes4 interfaceId) external pure returns (bool) {
