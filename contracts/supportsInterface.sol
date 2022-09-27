@@ -35,8 +35,8 @@ abstract contract SupportsERC {
     // bytes4 private constant INTERFACE_ID_ERC1155 = 0xd9b67a26;
 
     //@return: true if a contract supports an interface
-    function supportsERC(address nftAddress, bytes4 interfaceId) external pure returns (bool) {
-        return IERC165(nftAddress).supportsInterface(interfaceId);
+    function supportsERC(address addr, bytes4 interfaceId) external pure returns (bool) {
+        return IERC165(addr).supportsInterface(interfaceId);
     }
 }
 
