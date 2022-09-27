@@ -22,7 +22,7 @@ interface ExampleInterface {
 //There may be a generic implementation of this function for all interfaces. Ideas? ;)
 //This function will return an interface ID. I.e 0x80ac58cd == IERC721
 contract InterfaceIdGenerator {
-  function genStoreInterfaceId(ExampleInterface i) external pure returns (bytes4) {
+  function genInterfaceId(ExampleInterface i) external pure returns (bytes4) {
     return i.hello.selector ^ i.world.selector;
   }
 }
