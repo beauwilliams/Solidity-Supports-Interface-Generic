@@ -2,7 +2,7 @@
 // Author: beauwilliams
 pragma solidity 0.8.7;
 
-// A generic, pure implemtenation to check if a contract/token supports an interface.
+// A generic, pure implementation to check if a contract/token supports an interface.
 // Such as being able to verify 'this token is an ERC721'
 // Extendable to any custom interface addressed the ID of an interface, calculated using below example.
 
@@ -21,25 +21,30 @@ interface ExampleInterface {
 
 //There may be a generic implementation of this function for all interfaces. Ideas? ;)
 //This function will return an interface ID. I.e 0x80ac58cd == IERC721
-contract InterfaceIdGenerator {
-  function genInterfaceId(ExampleInterface i) external pure returns (bytes4) {
-    return i.hello.selector ^ i.world.selector;
+abstract contract InterfaceIdGenerator {
+  function calcInterfaceId() external pure returns (bytes4) {
+    return ExampleInterface.hello.selector ^ ExampleInterface.world.selector;
   }
 }
 
 abstract contract SupportsERC {
     // We can hardcode these variables into our contracts to save gas.
     // However, this force us to use view functions.
-    // Intsead of pure ones which uphold a side effect free invariant.
+    // Instead of pure ones which uphold a side effect free invariant.
     // bytes4 private constant INTERFACE_ID_ERC721 = 0x80ac58cd;
     // bytes4 private constant INTERFACE_ID_ERC1155 = 0xd9b67a26;
-  	// IERC1820Registry can be used to retrieve/store contract interfaces
 
     //@return: true if a contract supports an interface
-    function supportsERC(address addr, bytes4 interfaceId) external pure returns (bool) {
-        return IERC165(addr).supportsInterface(interfaceId);
+    function supportsERC(address nftAddress, bytes4 interfaceId) external pure returns (bool) {
+        return IERC165(nftAddress).supportsInterface(interfaceId);
     }
 }
 
 //Our base implementation contract for purpose of this example
-contract MyContract is SupportsERC {}
+contract MyContract is SupportsERC, InterfaceIdGenerator {
+
+  //Here is the easy generic way to get an interface type using the solidity builtin.
+  function getExampleInterfaceType() external pure returns (bytes4) {
+    return type(ExampleInterface).interfaceId;
+  }
+}
